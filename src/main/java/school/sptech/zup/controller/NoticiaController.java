@@ -35,11 +35,11 @@ public class NoticiaController {
 
 
     //@PostMapping("/rss/agendamento/diario")
-    @Scheduled(cron = "0 27 22 * * ?")
+    @Scheduled(cron = "0 11 15 * * ?")
     public void Agendamento(){
         //_noticiaService.getXmlInvestopedia(); Não rodar
         //_noticiaService.getXmlMarkets(); Não rodar
-        //_noticiaService.getXmlUOL();
+       //_noticiaService.getXmlUOL();
        _noticiaService.getXmlGAZETA();
        _noticiaService.getXmlForbes();
        _noticiaService.getXmlGlobo();
@@ -48,7 +48,6 @@ public class NoticiaController {
 
         System.out.println("Tarefas Diárias executadas com sucesso");
     }
-
     @GetMapping("/rss/uol")
     //@Scheduled(cron = "0 1 12 * * ?")
     public ResponseEntity<List<Noticia>> getRssUOL(){
@@ -182,5 +181,11 @@ public class NoticiaController {
             return ResponseEntity.status(204).build();
         }
         return ResponseEntity.status(200).body(noticiaPorId);
+    }
+
+    @PostMapping("/chave/gpt/{idChave}")
+    public ResponseEntity<Optional<Noticia>> InserirChave(@PathVariable String idChave){
+        var inserirChave = _gptService.InserirChave(idChave);
+        return ResponseEntity.ok().build();
     }
 }
